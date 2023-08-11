@@ -12,6 +12,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,8 +23,13 @@ import com.branislavbily.rocket.core.presentation.GoBackIconWithTitle
 import com.branislavbily.rocket.features.Screens
 
 @Composable
-fun RocketDetail(navController: NavController) {
+fun RocketDetail(
+    navController: NavController,
+    viewModel: RocketDetailViewModel,
+) {
+    val state by viewModel.viewState.collectAsState()
     RocketDetailContent(
+        state = state,
         onBackPressed = { navController.popBackStack() },
         onLaunchPressed = { navController.navigate(Screens.Launch.route) },
     )
@@ -31,6 +38,7 @@ fun RocketDetail(navController: NavController) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RocketDetailContent(
+    state: RocketDetailScreenState,
     onBackPressed: () -> Unit,
     onLaunchPressed: () -> Unit,
 ) {
@@ -61,6 +69,7 @@ fun RocketDetailContent(
             modifier = Modifier.fillMaxSize()
                 .padding(padding),
         ) {
+            Text(text = state.rocketID.toString())
         }
     }
 }
@@ -68,5 +77,5 @@ fun RocketDetailContent(
 @Preview
 @Composable
 fun RocketDetailPreview() {
-    RocketDetailContent({}, {})
+    RocketDetailContent(RocketDetailScreenState(), {}, {})
 }

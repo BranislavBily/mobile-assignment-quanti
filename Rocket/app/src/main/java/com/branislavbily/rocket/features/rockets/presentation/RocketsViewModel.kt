@@ -20,11 +20,12 @@ class RocketsViewModel(
     val viewState: StateFlow<RocketsScreenState> = _viewState
 
     fun getRockets() {
-        val joj = repository.getRockets()
+        repository.getRockets()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.io())
             .subscribe({ result ->
                 _viewState.update { state ->
+                    Log.i(TAG, result.toString())
                     state.copy(rockets = result)
                 }
             }, { error ->

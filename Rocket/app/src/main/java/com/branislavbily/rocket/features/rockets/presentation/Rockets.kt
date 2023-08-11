@@ -37,7 +37,9 @@ fun Rockets(
     val state by viewModel.viewState.collectAsState()
     RocketsContent(
         state = state,
-        onRocketClicked = { navController.navigate(Screens.RocketDetail.route) },
+        onRocketClicked = { rocketId ->
+            navController.navigate(Screens.RocketDetail.route + "/$rocketId")
+        },
     )
 }
 
@@ -61,7 +63,6 @@ fun RocketsContent(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.Black)
                 .padding(padding),
         ) {
             Column(

@@ -1,5 +1,6 @@
 package com.branislavbily.rocket.features.rockets
 
+import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetailViewModel
 import com.branislavbily.rocket.features.rockets.data.RocketsRemoteDataSource
 import com.branislavbily.rocket.features.rockets.data.RocketsRepository
 import com.branislavbily.rocket.features.rockets.data.api.RocketsApiDescription
@@ -14,6 +15,7 @@ import retrofit2.Retrofit
 
 val rocketsModule = module {
     viewModelOf(::RocketsViewModel)
+    viewModelOf(::RocketDetailViewModel)
 
     single<RocketsApiDescription> {
         get<Retrofit>().create(RocketsApiDescription::class.java)
