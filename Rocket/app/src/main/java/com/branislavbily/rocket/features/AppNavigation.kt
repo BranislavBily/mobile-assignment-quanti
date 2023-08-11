@@ -13,6 +13,7 @@ import com.branislavbily.rocket.features.rockets.presentation.Rockets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import org.koin.androidx.compose.koinViewModel
 
 val springSpec = spring<IntOffset>(dampingRatio = Spring.DampingRatioNoBouncy)
 
@@ -51,7 +52,10 @@ fun AppNavigation() {
                 )
             },
         ) {
-            Rockets(navController)
+            Rockets(
+                navController = navController,
+                viewModel = koinViewModel(),
+            )
         }
         composable(
             route = Screens.RocketDetail.route,

@@ -21,7 +21,9 @@ import com.branislavbily.rocket.features.Screens
 @Composable
 fun Rockets(
     navController: NavController,
+    viewModel: RocketsViewModel,
 ) {
+    viewModel.getRockets()
     RocketsContent(
         onRocketClicked = { navController.navigate(Screens.RocketDetail.route) },
     )
