@@ -85,9 +85,12 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
 
-    // rxjava
+    // Rxjava
     implementation("io.reactivex.rxjava2:rxjava:2.2.13")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
     implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
+
+    // Koil
+    implementation("io.coil-kt:coil-compose:2.2.2")
 }

@@ -3,4 +3,10 @@
     <string name="Rockets">Rockets</string>
     <string name="RocketDetail">Rocket Detail</string>
     <string name="Launch">Launch</string>
+    <string name="overview">Overview\n</string>
+    <string name="parameters">Parameters</string>
+    <string name="height">height</string>
+    <string name="mass">mass</string>
+    <string name="diameter">diameter</string>
+    <string name="photos">Photos</string>
 </resources>

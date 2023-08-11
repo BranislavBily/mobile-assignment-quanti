@@ -12,13 +12,14 @@ interface RocketDetailAPIConverterUseCase {
 class RocketDetailAPIConverterUseCaseImpl : RocketDetailAPIConverterUseCase {
     override fun toModel(rocketDetailAPI: RocketDetailAPI): RocketDetail = RocketDetail(
         id = rocketDetailAPI.id,
+        rocketName = rocketDetailAPI.rocketName,
         overview = rocketDetailAPI.overview,
         parameters = RocketParameters(
             height = rocketDetailAPI.height.meters,
             diameter = rocketDetailAPI.diameter.meters,
             mass = rocketDetailAPI.mass.kg,
         ),
-        states = listOf(
+        stages = listOf(
             RocketStage(
                 reusable = rocketDetailAPI.firstStage.reusable,
                 engines = rocketDetailAPI.firstStage.engines,
@@ -32,5 +33,6 @@ class RocketDetailAPIConverterUseCaseImpl : RocketDetailAPIConverterUseCase {
                 burnTime = rocketDetailAPI.secondStage.burnTime,
             ),
         ),
+        photos = rocketDetailAPI.imageLinks,
     )
 }
