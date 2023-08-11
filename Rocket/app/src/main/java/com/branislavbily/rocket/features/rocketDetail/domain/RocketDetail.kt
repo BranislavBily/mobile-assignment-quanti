@@ -18,6 +18,6 @@ data class RocketParameters(
 data class RocketStage(
     val reusable: Boolean = false,
     val engines: Int = 0,
-    val fuel: Int = 0,
+    val fuel: Double = .0,
     val burnTime: Int? = 0,
 )

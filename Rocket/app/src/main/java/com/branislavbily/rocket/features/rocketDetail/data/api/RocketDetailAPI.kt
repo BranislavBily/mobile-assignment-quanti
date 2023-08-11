@@ -47,7 +47,7 @@ data class StageAPI(
     val reusable: Boolean,
     val engines: Int,
     @SerialName("fuel_amount_tons")
-    val fuel: Int,
+    val fuel: Double,
     @SerialName("burn_time_sec")
     val burnTime: Int?,
 )
