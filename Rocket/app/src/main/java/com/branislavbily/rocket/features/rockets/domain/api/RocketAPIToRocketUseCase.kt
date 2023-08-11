@@ -12,5 +12,6 @@ class RocketAPIConverterUseCaseImpl : RocketAPIConverterUseCase {
         id = rocketAPI.id,
         name = rocketAPI.name,
         firstFlight = rocketAPI.firstFlight,
+        rocketID = rocketAPI.rocketID,
     )
 }

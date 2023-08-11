@@ -10,4 +10,6 @@ data class RocketAPI(
     val name: String,
     @SerialName("first_flight")
     val firstFlight: String,
+    @SerialName("rocket_id")
+    val rocketID: String,
 )

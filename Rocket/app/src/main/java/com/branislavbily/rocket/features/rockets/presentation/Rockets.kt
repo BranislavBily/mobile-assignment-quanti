@@ -47,7 +47,7 @@ fun Rockets(
 @Composable
 fun RocketsContent(
     state: RocketsScreenState,
-    onRocketClicked: (Int) -> Unit,
+    onRocketClicked: (String) -> Unit,
 ) {
     Scaffold(
         topBar = {

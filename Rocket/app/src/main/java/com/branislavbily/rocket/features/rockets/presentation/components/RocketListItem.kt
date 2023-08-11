@@ -25,7 +25,7 @@ import com.branislavbily.rocket.features.rockets.domain.Rocket
 @Composable
 fun RocketListItem(
     rocket: Rocket,
-    onRocketClicked: (Int) -> Unit,
+    onRocketClicked: (String) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -33,7 +33,7 @@ fun RocketListItem(
             .background(color = Color.White)
             .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
             .clickable {
-                onRocketClicked(rocket.id)
+                onRocketClicked(rocket.rocketID)
             },
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {

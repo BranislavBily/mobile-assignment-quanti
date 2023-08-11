@@ -62,10 +62,10 @@ fun AppNavigation() {
         }
         val rocketIdArgument = "rocketId"
         composable(
-            route = Screens.RocketDetail.route + "/$rocketIdArgument",
+            route = Screens.RocketDetail.route + "/{$rocketIdArgument}",
             arguments = listOf(
                 navArgument(rocketIdArgument) {
-                    type = NavType.IntType
+                    type = NavType.StringType
                 },
             ),
             enterTransition = {
@@ -97,7 +97,7 @@ fun AppNavigation() {
                 navController,
                 viewModel = koinViewModel<RocketDetailViewModel>().apply {
                     setMovie(
-                        entry.arguments?.getInt(rocketIdArgument),
+                        entry.arguments?.getString(rocketIdArgument),
                     )
                 },
             )
