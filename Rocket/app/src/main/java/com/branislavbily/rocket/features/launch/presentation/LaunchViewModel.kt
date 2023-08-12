@@ -16,10 +16,10 @@ class LaunchViewModel(
 ) : ViewModel() {
 
     private lateinit var sensorManager: SensorManager
-    private lateinit var gyroscop: Sensor
+    private lateinit var gyroscope: Sensor
     private lateinit var accelometer: Sensor
 
-    private val gyroscopSensorListener: SensorEventListener = GyroscopSensorListener(::fireRocket)
+    private val gyroscopeSensorListener: SensorEventListener = GyroscopSensorListener(::fireRocket)
     private val accelerometerChangeListener: SensorEventListener =
         AccelerometerChangeListener(::fireRocket)
 
@@ -27,32 +27,36 @@ class LaunchViewModel(
         MutableStateFlow(LaunchScreenState())
     val viewState: StateFlow<LaunchScreenState> = _viewState
 
+    override fun onCleared() {
+        sensorManager.unregisterListener(gyroscopeSensorListener)
+        super.onCleared()
+    }
+
     fun listenToRotationChange() {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        gyroscop = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
         accelometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         sensorManager.registerListener(
-            gyroscopSensorListener,
-            gyroscop,
-            SensorManager.SENSOR_DELAY_FASTEST,
+            gyroscopeSensorListener,
+            gyroscope,
+            SensorManager.SENSOR_DELAY_NORMAL,
         )
 
         sensorManager.registerListener(
             accelerometerChangeListener,
             accelometer,
-            SensorManager.SENSOR_DELAY_FASTEST,
+            SensorManager.SENSOR_DELAY_NORMAL,
         )
+    }
+
+    fun clearRocket() {
+        _viewState.update { it.copy(fireRocket = false) }
     }
 
     private fun fireRocket() {
         Log.i("LaunchViewModel", "Fireaway")
         _viewState.update { it.copy(fireRocket = true) }
-    }
-
-    override fun onCleared() {
-        sensorManager.unregisterListener(gyroscopSensorListener)
-        super.onCleared()
     }
 }
 
@@ -65,10 +69,11 @@ class GyroscopSensorListener(
 ) : SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
+            Log.i("AccelerometerSensorListener", "Current value of z-rot: ${it.values[1]}")
             // The second value in FloatArray is Z axis
             if (it.values[2] > 2 || it.values[2] < -2) {
                 Log.i("GyropscopSensorListener", "Fireaway")
-//                zRotationChanged()
+                zRotationChanged()
             }
         }
     }
@@ -88,7 +93,11 @@ class AccelerometerChangeListener(
                 firstValue = it.values[1]
             } else {
                 firstValue?.let { value ->
-                    if (it.values[1] < value - 2) {
+                    Log.i(
+                        "AccelerometerSensorListener",
+                        "First value: $firstValue current value of x-rot: ${it.values[1]}",
+                    )
+                    if (it.values[1] > value + 1) {
                         Log.i("AccelerometerSensorListener", "Fireaway")
                         yRotationChanged()
                     }
