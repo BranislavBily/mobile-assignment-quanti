@@ -55,6 +55,7 @@ class GyroscopSensorListener(
 ) : SensorEventListener {
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
+            // The second value in FloatArray is Z axis
             if (it.values[2] > 1) {
                 Log.i("GyropscopSensorListener", "Fireaway")
                 zRotationChanged()
