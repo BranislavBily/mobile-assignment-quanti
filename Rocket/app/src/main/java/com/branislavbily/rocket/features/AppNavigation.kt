@@ -7,12 +7,16 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.IntOffset
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
 import com.branislavbily.rocket.features.launch.presentation.Launch
 import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetail
+import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetailViewModel
 import com.branislavbily.rocket.features.rockets.presentation.Rockets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
+import org.koin.androidx.compose.koinViewModel
 
 val springSpec = spring<IntOffset>(dampingRatio = Spring.DampingRatioNoBouncy)
 
@@ -51,10 +55,19 @@ fun AppNavigation() {
                 )
             },
         ) {
-            Rockets(navController)
+            Rockets(
+                navController = navController,
+                viewModel = koinViewModel(),
+            )
         }
+        val rocketIdArgument = "rocketId"
         composable(
-            route = Screens.RocketDetail.route,
+            route = Screens.RocketDetail.route + "/{$rocketIdArgument}",
+            arguments = listOf(
+                navArgument(rocketIdArgument) {
+                    type = NavType.StringType
+                },
+            ),
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { 1000 },
@@ -79,8 +92,15 @@ fun AppNavigation() {
                     animationSpec = springSpec,
                 )
             },
-        ) {
-            RocketDetail(navController)
+        ) { entry ->
+            RocketDetail(
+                navController,
+                viewModel = koinViewModel<RocketDetailViewModel>().apply {
+                    setRocketId(
+                        entry.arguments?.getString(rocketIdArgument),
+                    )
+                },
+            )
         }
         composable(
             route = Screens.Launch.route,
