@@ -2,6 +2,7 @@ package com.branislavbily.rocket.features.launch.presentation
 
 import androidx.compose.animation.core.FastOutLinearInEasing
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -20,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -85,6 +87,15 @@ fun LaunchContent(
                 label = "RocketPos",
             )
 
+            val scaleAnimation: Float by animateFloatAsState(
+                animationSpec = tween(
+                    durationMillis = 3000,
+                    easing = FastOutLinearInEasing,
+                ),
+                targetValue = if (state.fireRocket) 0.5F else 1F,
+                label = "RocketScale",
+            )
+
             if (!state.fireRocket) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_rocket_idle),
@@ -92,7 +103,7 @@ fun LaunchContent(
                 )
             } else {
                 FlyingRocket(
-                    modifier = Modifier.offset(y = offsetAnimation),
+                    modifier = Modifier.offset(y = offsetAnimation).scale(scaleAnimation),
                 )
             }
         }
