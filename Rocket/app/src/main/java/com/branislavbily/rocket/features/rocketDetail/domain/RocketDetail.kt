@@ -2,8 +2,8 @@ package com.branislavbily.rocket.features.rocketDetail.domain
 
 data class RocketDetail(
     val id: Int = 0,
-    val rocketName: String = "Best rocket",
-    val overview: String = "No overview here",
+    val rocketName: String = "",
+    val overview: String = "",
     val parameters: RocketParameters = RocketParameters(),
     val stages: List<RocketStage> = listOf(),
     val photos: List<String> = listOf(),

@@ -96,7 +96,7 @@ fun AppNavigation() {
             RocketDetail(
                 navController,
                 viewModel = koinViewModel<RocketDetailViewModel>().apply {
-                    setMovie(
+                    setRocketId(
                         entry.arguments?.getString(rocketIdArgument),
                     )
                 },
