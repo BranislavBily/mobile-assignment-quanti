@@ -17,8 +17,11 @@ class LaunchViewModel(
 
     private lateinit var sensorManager: SensorManager
     private lateinit var gyroscop: Sensor
+    private lateinit var accelometer: Sensor
 
     private val gyroscopSensorListener: SensorEventListener = GyroscopSensorListener(::fireRocket)
+    private val accelerometerChangeListener: SensorEventListener =
+        AccelerometerChangeListener(::fireRocket)
 
     private val _viewState: MutableStateFlow<LaunchScreenState> =
         MutableStateFlow(LaunchScreenState())
@@ -27,10 +30,17 @@ class LaunchViewModel(
     fun listenToRotationChange() {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
         gyroscop = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        accelometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         sensorManager.registerListener(
             gyroscopSensorListener,
             gyroscop,
+            SensorManager.SENSOR_DELAY_FASTEST,
+        )
+
+        sensorManager.registerListener(
+            accelerometerChangeListener,
+            accelometer,
             SensorManager.SENSOR_DELAY_FASTEST,
         )
     }
@@ -56,13 +66,37 @@ class GyroscopSensorListener(
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
             // The second value in FloatArray is Z axis
-            if (it.values[2] > 1) {
+            if (it.values[2] > 2 || it.values[2] < -2) {
                 Log.i("GyropscopSensorListener", "Fireaway")
                 zRotationChanged()
             }
         }
     }
 
-    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+}
+
+class AccelerometerChangeListener(
+    private val yRotationChanged: () -> Unit,
+) : SensorEventListener {
+
+    private var firstValue: Float? = null
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        event?.let {
+            if (firstValue == null) {
+                firstValue = it.values[1]
+            } else {
+                // First value cant be null here
+                firstValue?.let { value ->
+                    if (it.values[1] > value + 2) {
+                        Log.i("AccelerometerSensorListener", "Fireaway")
+                        yRotationChanged()
+                    }
+                }
+            }
+        }
     }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
 }
