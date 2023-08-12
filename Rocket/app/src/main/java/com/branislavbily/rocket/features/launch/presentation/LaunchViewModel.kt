@@ -68,7 +68,7 @@ class GyroscopSensorListener(
             // The second value in FloatArray is Z axis
             if (it.values[2] > 2 || it.values[2] < -2) {
                 Log.i("GyropscopSensorListener", "Fireaway")
-                zRotationChanged()
+//                zRotationChanged()
             }
         }
     }
@@ -87,9 +87,8 @@ class AccelerometerChangeListener(
             if (firstValue == null) {
                 firstValue = it.values[1]
             } else {
-                // First value cant be null here
                 firstValue?.let { value ->
-                    if (it.values[1] > value + 2) {
+                    if (it.values[1] < value - 2) {
                         Log.i("AccelerometerSensorListener", "Fireaway")
                         yRotationChanged()
                     }
