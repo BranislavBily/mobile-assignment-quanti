@@ -30,17 +30,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.branislavbily.rocket.R
 import com.branislavbily.rocket.core.presentation.GoBackIconWithTitle
+import com.branislavbily.rocket.core.presentation.rememberLifecycleEvent
 import com.branislavbily.rocket.features.Screens
 import com.branislavbily.rocket.features.rocketDetail.domain.RocketDetail
 import com.branislavbily.rocket.features.rocketDetail.domain.RocketParameters
@@ -52,11 +53,14 @@ import com.branislavbily.rocket.ui.theme.Typography
 fun RocketDetail(
     navController: NavController,
     viewModel: RocketDetailViewModel,
+    rocketDetailId: String?,
 ) {
     val state by viewModel.viewState.collectAsState()
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(lifecycleOwner.lifecycle.currentState) {
-        viewModel.getRocketDetail()
+    val lifecycleEvent = rememberLifecycleEvent()
+    LaunchedEffect(lifecycleEvent) {
+        if (lifecycleEvent == Lifecycle.Event.ON_START) {
+            viewModel.getRocketDetail(rocketDetailId)
+        }
     }
     RocketDetailContent(
         state = state,

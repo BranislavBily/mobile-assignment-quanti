@@ -25,8 +25,10 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.branislavbily.rocket.R
+import com.branislavbily.rocket.core.presentation.rememberLifecycleEvent
 import com.branislavbily.rocket.features.Screens
 import com.branislavbily.rocket.features.rockets.presentation.components.RocketListItem
 
@@ -36,9 +38,11 @@ fun Rockets(
     viewModel: RocketsViewModel,
 ) {
     val state by viewModel.viewState.collectAsState()
-    val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(lifecycleOwner.lifecycle.currentState) {
-        viewModel.getRockets()
+    val lifecycleEvent = rememberLifecycleEvent()
+    LaunchedEffect(lifecycleEvent) {
+        if (lifecycleEvent == Lifecycle.Event.ON_RESUME) {
+            viewModel.getRockets()
+        }
     }
     RocketsContent(
         state = state,

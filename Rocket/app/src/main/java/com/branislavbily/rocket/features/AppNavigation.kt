@@ -11,7 +11,6 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.branislavbily.rocket.features.launch.presentation.Launch
 import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetail
-import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetailViewModel
 import com.branislavbily.rocket.features.rockets.presentation.Rockets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -95,11 +94,8 @@ fun AppNavigation() {
         ) { entry ->
             RocketDetail(
                 navController,
-                viewModel = koinViewModel<RocketDetailViewModel>().apply {
-                    setRocketId(
-                        entry.arguments?.getString(rocketIdArgument),
-                    )
-                },
+                viewModel = koinViewModel(),
+                entry.arguments?.getString(rocketIdArgument),
             )
         }
         composable(

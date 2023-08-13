@@ -25,21 +25,23 @@ class RocketsViewModel(
     val viewState: StateFlow<RocketsScreenState> = _viewState
 
     fun getRockets() {
-        _viewState.update { it.copy(isLoading = true) }
-        compositeDisposable.add(
-            repository.getRockets()
-                .subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .doAfterTerminate {
-                    _viewState.update { it.copy(isLoading = false) }
-                }
-                .subscribe({ result ->
-                    Log.i(TAG, result.toString())
-                    _viewState.update { it.copy(rockets = result) }
-                }, { error ->
-                    Log.e(TAG, "Error: ${error.localizedMessage.orEmpty()}")
-                }),
-        )
+        if (viewState.value.rockets.isEmpty()) {
+            _viewState.update { it.copy(isLoading = true) }
+            compositeDisposable.add(
+                repository.getRockets()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .doAfterTerminate {
+                        _viewState.update { it.copy(isLoading = false) }
+                    }
+                    .subscribe({ result ->
+                        Log.i(TAG, result.toString())
+                        _viewState.update { it.copy(rockets = result) }
+                    }, { error ->
+                        Log.e(TAG, "Error: ${error.localizedMessage.orEmpty()}")
+                    }),
+            )
+        }
     }
 }
 
