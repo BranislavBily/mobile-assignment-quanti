@@ -9,4 +9,6 @@
     <string name="mass">mass</string>
     <string name="diameter">diameter</string>
     <string name="photos">Photos</string>
+    <string name="move_your_phone_up_to_launch_the_rocket">Move your phone up to launch the rocket</string>
+    <string name="launch_successful">Launch successful!</string>
 </resources>

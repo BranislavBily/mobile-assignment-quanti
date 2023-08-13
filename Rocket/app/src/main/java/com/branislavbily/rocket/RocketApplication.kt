@@ -2,6 +2,7 @@ package com.branislavbily.rocket
 
 import android.app.Application
 import com.branislavbily.rocket.core.di.coreAppModule
+import com.branislavbily.rocket.features.launch.launchAppModule
 import com.branislavbily.rocket.features.rocketDetail.rocketDetailModule
 import com.branislavbily.rocket.features.rockets.rocketsModule
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +16,12 @@ class RocketApplication : Application() {
         startKoin {
             androidContext(this@RocketApplication)
             androidLogger()
-            modules(coreAppModule, rocketsModule, rocketDetailModule)
+            modules(
+                coreAppModule,
+                rocketsModule,
+                rocketDetailModule,
+                launchAppModule,
+            )
         }
     }
 }

@@ -129,7 +129,7 @@ fun AppNavigation() {
                 )
             },
         ) {
-            Launch(navController)
+            Launch(navController, koinViewModel())
         }
     }
 }

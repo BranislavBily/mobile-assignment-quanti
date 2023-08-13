@@ -41,7 +41,7 @@ fun RocketListItem(
             modifier = Modifier.padding(),
         ) {
             Image(
-                painter = painterResource(id = R.drawable.rocket),
+                painter = painterResource(id = R.drawable.ic_rocket_logo),
                 contentDescription = "Rocket",
             )
         }
