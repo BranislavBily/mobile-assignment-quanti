@@ -14,8 +14,6 @@ class RocketDetailViewModel(
     private val repository: RocketDetailRepository,
 ) : ViewModel() {
 
-    private val TAG = "RocketDetailViewModel"
-
     private val compositeDisposable by lazy {
         CompositeDisposable()
     }
@@ -24,6 +22,12 @@ class RocketDetailViewModel(
         MutableStateFlow(RocketDetailScreenState())
     val viewState: StateFlow<RocketDetailScreenState> = _viewState
 
+    /**
+     * Updates screen state with new rocketDetailId if not null and creates request
+     * for Rocket detail based on the rockedDetailId
+     *
+     * @param rocketDetailId Id of the rocket
+     */
     fun getRocketDetail(rocketDetailId: String?) {
         rocketDetailId?.let { rocketId ->
             _viewState.update {
@@ -33,7 +37,7 @@ class RocketDetailViewModel(
                 )
             }
             compositeDisposable.add(
-                repository.getRocket(rocketId)
+                repository.getRocketDetail(rocketId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .doAfterTerminate {
@@ -49,6 +53,10 @@ class RocketDetailViewModel(
                     }),
             )
         }
+    }
+
+    companion object {
+        private const val TAG = "RocketDetailViewModel"
     }
 }
 

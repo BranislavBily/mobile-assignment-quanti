@@ -380,7 +380,7 @@ fun RocketPhotos(
                     .padding(top = 8.dp, bottom = 8.dp)
                     .clip(RoundedCornerShape(16.dp)),
                 model = photo,
-                contentDescription = "Image of Rocket",
+                contentDescription = stringResource(R.string.image_of_rocket),
                 contentScale = ContentScale.FillWidth,
             )
         }

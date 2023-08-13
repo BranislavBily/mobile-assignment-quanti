@@ -7,5 +7,5 @@ import retrofit2.http.Path
 interface RocketDetailApiDescription {
 
     @GET("rockets/{rocketId}")
-    fun getRocket(@Path("rocketId") rocketId: String): Single<RocketDetailAPI>
+    fun getRocketDetail(@Path("rocketId") rocketId: String): Single<RocketDetailAPI>
 }

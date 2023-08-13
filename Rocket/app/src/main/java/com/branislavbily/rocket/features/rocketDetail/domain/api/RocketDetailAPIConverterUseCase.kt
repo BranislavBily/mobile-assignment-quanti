@@ -6,6 +6,12 @@ import com.branislavbily.rocket.features.rocketDetail.domain.RocketParameters
 import com.branislavbily.rocket.features.rocketDetail.domain.Stage
 
 interface RocketDetailAPIConverterUseCase {
+    /**
+     * Converts RocketDetailAPI into model RocketDetail
+     *
+     * @param rocketDetailAPI Data class to be converted
+     * @return Converted model
+     */
     fun toModel(rocketDetailAPI: RocketDetailAPI): RocketDetail
 }
 

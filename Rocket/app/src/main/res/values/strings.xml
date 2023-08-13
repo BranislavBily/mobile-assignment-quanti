@@ -13,6 +13,9 @@
     <string name="not_reusable">not reusable</string>
     <string name="move_your_phone_up_to_launch_the_rocket">Move your phone up to launch the rocket</string>
     <string name="launch_successful">Launch successful!</string>
+    <string name="idle_rocket">Idle rocket</string>
+    <string name="go_back_arrow">Go back arrow</string>
+    <string name="image_of_rocket">Image of Rocket</string>
     <plurals name="engine">
         <item quantity="one">%d engine</item>
         <item quantity="other">%d engines</item>

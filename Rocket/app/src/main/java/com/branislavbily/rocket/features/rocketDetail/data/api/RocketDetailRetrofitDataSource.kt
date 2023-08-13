@@ -6,6 +6,6 @@ import io.reactivex.Single
 class RocketDetailRetrofitDataSource(
     private val rocketDetailApiDescription: RocketDetailApiDescription,
 ) : RocketDetailRemoteDataSource {
-    override fun getRocket(id: String): Single<RocketDetailAPI> =
-        rocketDetailApiDescription.getRocket(id)
+    override fun getRocketDetail(id: String): Single<RocketDetailAPI> =
+        rocketDetailApiDescription.getRocketDetail(id)
 }
