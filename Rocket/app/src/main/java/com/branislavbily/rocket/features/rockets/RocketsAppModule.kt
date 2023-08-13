@@ -29,6 +29,8 @@ val rocketsModule = module {
     singleOf(::RocketsRepository)
 
     factory<RocketAPIConverterUseCase> {
-        RocketAPIConverterUseCaseImpl()
+        RocketAPIConverterUseCaseImpl(
+            dateFormatter = get(),
+        )
     }
 }

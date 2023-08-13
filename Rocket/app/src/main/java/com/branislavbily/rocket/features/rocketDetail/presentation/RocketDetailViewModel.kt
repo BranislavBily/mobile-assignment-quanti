@@ -24,14 +24,14 @@ class RocketDetailViewModel(
         MutableStateFlow(RocketDetailScreenState())
     val viewState: StateFlow<RocketDetailScreenState> = _viewState
 
-    fun setRocketId(id: String?) {
-        Log.i(TAG, "Received id: $id")
-        _viewState.update { state -> state.copy(rocketID = id) }
-    }
-
-    fun getRocketDetail() {
-        viewState.value.rocketID?.let { rocketId ->
-            _viewState.update { it.copy(isLoading = true) }
+    fun getRocketDetail(rocketDetailId: String?) {
+        rocketDetailId?.let { rocketId ->
+            _viewState.update {
+                it.copy(
+                    rocketID = rocketId,
+                    isLoading = true,
+                )
+            }
             compositeDisposable.add(
                 repository.getRocket(rocketId)
                     .subscribeOn(Schedulers.io())

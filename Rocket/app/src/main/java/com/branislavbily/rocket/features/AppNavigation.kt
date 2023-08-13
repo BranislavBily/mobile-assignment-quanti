@@ -11,7 +11,6 @@ import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.branislavbily.rocket.features.launch.presentation.Launch
 import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetail
-import com.branislavbily.rocket.features.rocketDetail.presentation.RocketDetailViewModel
 import com.branislavbily.rocket.features.rockets.presentation.Rockets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -94,16 +93,19 @@ fun AppNavigation() {
             },
         ) { entry ->
             RocketDetail(
-                navController,
-                viewModel = koinViewModel<RocketDetailViewModel>().apply {
-                    setRocketId(
-                        entry.arguments?.getString(rocketIdArgument),
-                    )
-                },
+                navController = navController,
+                viewModel = koinViewModel(),
+                rocketDetailId = entry.arguments?.getString(rocketIdArgument),
             )
         }
+
         composable(
-            route = Screens.Launch.route,
+            route = Screens.Launch.route + "/{$rocketIdArgument}",
+            arguments = listOf(
+                navArgument(rocketIdArgument) {
+                    type = NavType.StringType
+                },
+            ),
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { 1000 },
@@ -128,8 +130,12 @@ fun AppNavigation() {
                     animationSpec = springSpec,
                 )
             },
-        ) {
-            Launch(navController, koinViewModel())
+        ) { entry ->
+            Launch(
+                navController = navController,
+                viewModel = koinViewModel(),
+                navigationTitle = entry.arguments?.getString(rocketIdArgument),
+            )
         }
     }
 }

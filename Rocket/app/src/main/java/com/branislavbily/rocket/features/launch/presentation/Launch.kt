@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -27,6 +28,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.capitalize
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -38,6 +41,7 @@ import com.branislavbily.rocket.core.presentation.GoBackIconWithTitle
 fun Launch(
     navController: NavController,
     viewModel: LaunchViewModel,
+    navigationTitle: String?,
 ) {
     val state by viewModel.viewState.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -47,6 +51,7 @@ fun Launch(
 
     LaunchContent(
         state = state,
+        navigationTitle = navigationTitle.orEmpty().capitalize(Locale.current),
         onBackPressed = { navController.popBackStack() },
     )
 }
@@ -55,21 +60,40 @@ fun Launch(
 @Composable
 fun LaunchContent(
     state: LaunchScreenState,
+    navigationTitle: String,
     onBackPressed: () -> Unit,
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
+            TopAppBar(
+                navigationIcon = {
                     GoBackIconWithTitle(
                         onIconPressed = onBackPressed,
-                        title = stringResource(id = R.string.RocketDetail),
+                        title = navigationTitle,
                     )
-                }
-            })
+                },
+                title = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            style = MaterialTheme.typography.titleMedium,
+                            text = navigationTitle,
+                        )
+                    }
+                },
+                // I will create blank actions so that the title is in the center
+                actions = {
+                    Text(
+                        modifier = Modifier.padding(end = 8.dp),
+                        style = MaterialTheme.typography.titleMedium,
+                        text = navigationTitle,
+                        color = MaterialTheme.colorScheme.background,
+                    )
+                },
+            )
         },
     ) { padding ->
         Box(
@@ -104,7 +128,11 @@ fun LaunchContent(
                         painter = painterResource(id = R.drawable.ic_rocket_idle),
                         contentDescription = "Idle rocket",
                     )
-                    Text(text = stringResource(R.string.move_your_phone_up_to_launch_the_rocket))
+                    Text(
+                        modifier = Modifier.padding(top = 16.dp),
+                        text = stringResource(R.string.move_your_phone_up_to_launch_the_rocket),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
                 }
             } else {
                 Column(
@@ -113,7 +141,11 @@ fun LaunchContent(
                     FlyingRocket(
                         modifier = Modifier.offset(y = offsetAnimation).scale(scaleAnimation),
                     )
-                    Text(text = stringResource(R.string.launch_successful))
+                    Text(
+                        modifier = Modifier.padding(top = 16.dp),
+                        text = stringResource(R.string.launch_successful),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
                 }
             }
         }
@@ -134,5 +166,5 @@ fun FlyingRocket(
 @Preview
 @Composable
 fun LaunchPreview() {
-    LaunchContent(LaunchScreenState(), { })
+    LaunchContent(LaunchScreenState(), "Falcon 10", { })
 }

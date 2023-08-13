@@ -5,7 +5,7 @@ data class RocketDetail(
     val rocketName: String = "",
     val overview: String = "",
     val parameters: RocketParameters = RocketParameters(),
-    val stages: List<RocketStage> = listOf(),
+    val stages: List<Stage> = listOf(),
     val photos: List<String> = listOf(),
 )
 
@@ -15,7 +15,8 @@ data class RocketParameters(
     val mass: Int = 0,
 )
 
-data class RocketStage(
+data class Stage(
+    val title: String = "First stage",
     val reusable: Boolean = false,
     val engines: Int = 0,
     val fuel: Double = .0,
