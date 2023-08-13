@@ -2,6 +2,7 @@ package com.branislavbily.rocket.features.rocketDetail.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,6 +48,7 @@ import com.branislavbily.rocket.features.Screens
 import com.branislavbily.rocket.features.rocketDetail.domain.RocketDetail
 import com.branislavbily.rocket.features.rocketDetail.domain.RocketParameters
 import com.branislavbily.rocket.features.rocketDetail.domain.Stage
+import com.branislavbily.rocket.ui.theme.IOSBlue
 import com.branislavbily.rocket.ui.theme.LightGray
 import com.branislavbily.rocket.ui.theme.RocketColor
 import com.branislavbily.rocket.ui.theme.Typography
@@ -80,25 +82,38 @@ fun RocketDetailContent(
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
+            TopAppBar(
+                navigationIcon = {
                     GoBackIconWithTitle(
                         onIconPressed = onBackPressed,
                         title = stringResource(id = R.string.rockets),
                     )
-                    Text(text = state.rocketDetail.rocketName)
+                },
+                title = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Text(
+                            style = MaterialTheme.typography.titleMedium,
+                            text = state.rocketDetail.rocketName,
+                        )
+                    }
+                },
+                actions = {
                     Text(
-                        modifier = Modifier.clickable {
-                            onLaunchPressed()
-                        },
+                        modifier = Modifier
+                            .clickable {
+                                onLaunchPressed()
+                            },
+                        style = MaterialTheme.typography.titleMedium,
+                        color = IOSBlue,
                         text = stringResource(id = R.string.launch),
+                        fontWeight = FontWeight.Bold,
                     )
-                }
-            })
+                },
+            )
         },
     ) { padding ->
         Column(
@@ -326,7 +341,9 @@ fun RocketStageRow(
     text: String,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().padding(top = 8.dp, bottom = 8.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(top = 8.dp, bottom = 8.dp),
         horizontalArrangement = Arrangement.Start,
     ) {
         Icon(
@@ -347,7 +364,8 @@ fun RocketPhotos(
     photos: List<String>,
 ) {
     Column(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier
+            .fillMaxWidth()
             .padding(top = 8.dp, bottom = 8.dp),
     ) {
         Text(

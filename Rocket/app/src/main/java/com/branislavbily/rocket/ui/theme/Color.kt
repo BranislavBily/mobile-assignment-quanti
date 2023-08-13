@@ -8,6 +8,7 @@ val Pink80 = Color(0xFFEFB8C8)
 
 val LightGray = Color(0xFFF3F3F3)
 val RocketColor = Color(0xFFF25187)
+val IOSBlue = Color(0xFF3B82F7)
 
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
