@@ -16,7 +16,7 @@ data class RocketParameters(
 )
 
 data class Stage(
-    val title: String = "",
+    val title: String = "First stage",
     val reusable: Boolean = false,
     val engines: Int = 0,
     val fuel: Double = .0,

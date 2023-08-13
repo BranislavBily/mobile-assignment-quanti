@@ -18,6 +18,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -46,7 +47,8 @@ import com.branislavbily.rocket.features.Screens
 import com.branislavbily.rocket.features.rocketDetail.domain.RocketDetail
 import com.branislavbily.rocket.features.rocketDetail.domain.RocketParameters
 import com.branislavbily.rocket.features.rocketDetail.domain.Stage
-import com.branislavbily.rocket.ui.theme.TextOnBlackBackground
+import com.branislavbily.rocket.ui.theme.LightGray
+import com.branislavbily.rocket.ui.theme.RocketColor
 import com.branislavbily.rocket.ui.theme.Typography
 
 @Composable
@@ -165,7 +167,8 @@ fun RocketOverview(
             modifier = Modifier
                 .padding(bottom = 8.dp),
             text = stringResource(id = R.string.overview),
-            fontWeight = FontWeight.Black,
+            style = Typography.titleMedium,
+            fontWeight = FontWeight.Bold,
         )
         Text(
             modifier = Modifier
@@ -186,6 +189,7 @@ fun RocketParametersView(
     ) {
         Text(
             text = stringResource(id = R.string.parameters),
+            style = Typography.titleMedium,
             fontWeight = FontWeight.Bold,
         )
         Row(
@@ -228,18 +232,20 @@ fun RocketParameter(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(Color.Magenta),
+                .background(RocketColor),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = value + unit,
-                style = Typography.bodyLarge,
-                color = TextOnBlackBackground,
+                style = Typography.titleLarge,
+                color = LightGray,
+                fontWeight = FontWeight.Bold,
             )
             Text(
                 text = name,
                 style = Typography.bodyLarge,
+                color = LightGray,
             )
         }
     }
@@ -267,15 +273,19 @@ fun RocketStage(
     modifier: Modifier = Modifier,
     stage: Stage,
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surfaceVariant),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = stage.title,
-                style = Typography.bodyLarge,
+                style = Typography.titleMedium,
+                fontWeight = FontWeight.Bold,
             )
             RocketStageRow(
                 icon = R.drawable.ic_reusable,
@@ -322,6 +332,7 @@ fun RocketStageRow(
         Icon(
             painter = painterResource(id = icon),
             contentDescription = "RocketStageRowIcon",
+            tint = Color.Unspecified,
         )
         Text(
             modifier = Modifier.padding(start = 8.dp),
@@ -339,7 +350,11 @@ fun RocketPhotos(
         modifier = modifier.fillMaxWidth()
             .padding(top = 8.dp, bottom = 8.dp),
     ) {
-        Text(text = stringResource(id = R.string.photos))
+        Text(
+            text = stringResource(id = R.string.photos),
+            style = Typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
         photos.forEach { photo ->
             AsyncImage(
                 modifier = Modifier
@@ -364,6 +379,12 @@ fun RocketDetailPreview() {
 @Composable
 fun RocketDetailViewPreview() {
     RocketDetailView(rocket = RocketDetail())
+}
+
+@Preview
+@Composable
+fun RocketDetailStagesPreview() {
+    RocketStages(stages = listOf(Stage()))
 }
 
 @Preview
