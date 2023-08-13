@@ -103,6 +103,7 @@ fun RocketDetailContent(
                 actions = {
                     Text(
                         modifier = Modifier
+                            .padding(end = 8.dp)
                             .clickable {
                                 onLaunchPressed()
                             },
@@ -120,18 +121,18 @@ fun RocketDetailContent(
                 .fillMaxSize()
                 .padding(padding),
         ) {
+            RocketDetailView(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp),
+                rocket = state.rocketDetail,
+            )
             if (state.isLoading) {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize(),
                     contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
                 }
-            } else {
-                RocketDetailView(
-                    modifier = Modifier.padding(start = 16.dp, end = 16.dp),
-                    rocket = state.rocketDetail,
-                )
             }
         }
     }

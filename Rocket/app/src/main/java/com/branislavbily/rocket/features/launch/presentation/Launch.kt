@@ -87,6 +87,7 @@ fun LaunchContent(
                 // I will create blank actions so that the title is in the center
                 actions = {
                     Text(
+                        modifier = Modifier.padding(end = 8.dp),
                         style = MaterialTheme.typography.titleMedium,
                         text = navigationTitle,
                         color = MaterialTheme.colorScheme.background,
@@ -140,7 +141,11 @@ fun LaunchContent(
                     FlyingRocket(
                         modifier = Modifier.offset(y = offsetAnimation).scale(scaleAnimation),
                     )
-                    Text(text = stringResource(R.string.launch_successful))
+                    Text(
+                        modifier = Modifier.padding(top = 16.dp),
+                        text = stringResource(R.string.launch_successful),
+                        style = MaterialTheme.typography.titleSmall,
+                    )
                 }
             }
         }
