@@ -2,7 +2,6 @@ package com.branislavbily.rocket.features.rocketDetail.presentation
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -69,7 +68,7 @@ fun RocketDetail(
     RocketDetailContent(
         state = state,
         onBackPressed = { navController.popBackStack() },
-        onLaunchPressed = { navController.navigate(Screens.Launch.route) },
+        onLaunchPressed = { navController.navigate(Screens.Launch.route + "/${state.rocketDetail.rocketName}") },
     )
 }
 

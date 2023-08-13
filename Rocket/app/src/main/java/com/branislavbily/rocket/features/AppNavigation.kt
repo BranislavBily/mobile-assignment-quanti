@@ -93,13 +93,19 @@ fun AppNavigation() {
             },
         ) { entry ->
             RocketDetail(
-                navController,
+                navController = navController,
                 viewModel = koinViewModel(),
-                entry.arguments?.getString(rocketIdArgument),
+                rocketDetailId = entry.arguments?.getString(rocketIdArgument),
             )
         }
+
         composable(
-            route = Screens.Launch.route,
+            route = Screens.Launch.route + "/{$rocketIdArgument}",
+            arguments = listOf(
+                navArgument(rocketIdArgument) {
+                    type = NavType.StringType
+                },
+            ),
             enterTransition = {
                 slideInHorizontally(
                     initialOffsetX = { 1000 },
@@ -124,8 +130,12 @@ fun AppNavigation() {
                     animationSpec = springSpec,
                 )
             },
-        ) {
-            Launch(navController, koinViewModel())
+        ) { entry ->
+            Launch(
+                navController = navController,
+                viewModel = koinViewModel(),
+                navigationTitle = entry.arguments?.getString(rocketIdArgument),
+            )
         }
     }
 }
