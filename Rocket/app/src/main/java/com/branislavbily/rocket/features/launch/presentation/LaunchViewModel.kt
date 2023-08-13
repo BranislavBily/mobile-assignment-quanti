@@ -67,12 +67,18 @@ data class LaunchScreenState(
 class GyroscopSensorListener(
     private val zRotationChanged: () -> Unit,
 ) : SensorEventListener {
+
+    private val sensitivity = 1
+    private val TAG = "GyroscopSensorListener"
+
+    // The second value in FloatArray is Z axis
+    private val zAxisIndex = 2
+
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
-            Log.i("AccelerometerSensorListener", "Current value of z-rot: ${it.values[1]}")
-            // The second value in FloatArray is Z axis
-            if (it.values[2] > 2 || it.values[2] < -2) {
-                Log.i("GyropscopSensorListener", "Fireaway")
+            Log.i(TAG, "Current value of z-rot: ${it.values[zAxisIndex]}")
+            if (it.values[zAxisIndex] > sensitivity || it.values[zAxisIndex] < (-sensitivity)) {
+                Log.i(TAG, "Fireaway")
                 zRotationChanged()
             }
         }
@@ -86,6 +92,7 @@ class AccelerometerChangeListener(
 ) : SensorEventListener {
 
     private var firstValue: Float? = null
+    private val sensitivity = 1
 
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
@@ -97,7 +104,7 @@ class AccelerometerChangeListener(
                         "AccelerometerSensorListener",
                         "First value: $firstValue current value of x-rot: ${it.values[1]}",
                     )
-                    if (it.values[1] > value + 1) {
+                    if (it.values[1] > (value + sensitivity) || it.values[1] < (value - sensitivity)) {
                         Log.i("AccelerometerSensorListener", "Fireaway")
                         yRotationChanged()
                     }
