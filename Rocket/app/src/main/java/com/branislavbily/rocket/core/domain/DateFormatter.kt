@@ -4,6 +4,12 @@ import android.icu.text.DateFormat
 import android.icu.text.SimpleDateFormat
 
 interface DateFormatter {
+    /**
+     * Changes the format of the String to format required
+     *
+     * @param date Date in String in given format
+     * @return Formatted date in String
+     */
     fun format(date: String): String
 }
 

@@ -8,8 +8,14 @@ class RocketDetailRepository(
     private val remoteDataSource: RocketDetailRemoteDataSource,
     private val rocketDetailAPIConverterUseCase: RocketDetailAPIConverterUseCase,
 ) {
-    fun getRocket(id: String): Single<RocketDetail> {
-        return remoteDataSource.getRocket(id).map { rocketAPI ->
+    /**
+     * Used remote data source to get rocket detail
+     *
+     * @param id Rocket identifier
+     * @return Single value of RocketDetail
+     */
+    fun getRocketDetail(id: String): Single<RocketDetail> {
+        return remoteDataSource.getRocketDetail(id).map { rocketAPI ->
             rocketDetailAPIConverterUseCase.toModel(rocketAPI)
         }
     }

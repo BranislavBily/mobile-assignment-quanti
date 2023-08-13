@@ -24,6 +24,10 @@ class RocketsViewModel(
         MutableStateFlow(RocketsScreenState())
     val viewState: StateFlow<RocketsScreenState> = _viewState
 
+    /**
+     * If there are no loaded rockets, creates new request to repository and updates screen state with new data
+     *
+     */
     fun getRockets() {
         if (viewState.value.rockets.isEmpty()) {
             _viewState.update { it.copy(isLoading = true) }

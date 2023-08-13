@@ -16,10 +16,8 @@ class LaunchViewModel(
 ) : ViewModel() {
 
     private lateinit var sensorManager: SensorManager
-    private lateinit var gyroscope: Sensor
-    private lateinit var accelometer: Sensor
 
-    private val gyroscopeSensorListener: SensorEventListener = GyroscopSensorListener(::fireRocket)
+    private val gyroscopeSensorListener: SensorEventListener = GyroscopeSensorListener(::fireRocket)
     private val accelerometerChangeListener: SensorEventListener =
         AccelerometerChangeListener(::fireRocket)
 
@@ -29,13 +27,17 @@ class LaunchViewModel(
 
     override fun onCleared() {
         sensorManager.unregisterListener(gyroscopeSensorListener)
+        sensorManager.unregisterListener(accelerometerChangeListener)
         super.onCleared()
     }
 
+    /**
+     * Registers listeners for the gyroscope and accelerometer sensors
+     */
     fun listenToRotationChange() {
         sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
-        accelometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        val gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
+        val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
         sensorManager.registerListener(
             gyroscopeSensorListener,
@@ -45,18 +47,22 @@ class LaunchViewModel(
 
         sensorManager.registerListener(
             accelerometerChangeListener,
-            accelometer,
+            accelerometer,
             SensorManager.SENSOR_DELAY_NORMAL,
         )
     }
 
-    fun clearRocket() {
-        _viewState.update { it.copy(fireRocket = false) }
+    /**
+     * Changes the screen state to fire rocket
+     *
+     */
+    private fun fireRocket() {
+        Log.i(TAG, "Fire away")
+        _viewState.update { it.copy(fireRocket = true) }
     }
 
-    private fun fireRocket() {
-        Log.i("LaunchViewModel", "Fireaway")
-        _viewState.update { it.copy(fireRocket = true) }
+    companion object {
+        private const val TAG = "LaunchViewModel"
     }
 }
 
@@ -64,12 +70,11 @@ data class LaunchScreenState(
     val fireRocket: Boolean = false,
 )
 
-class GyroscopSensorListener(
+class GyroscopeSensorListener(
     private val zRotationChanged: () -> Unit,
 ) : SensorEventListener {
 
     private val sensitivity = 1
-    private val TAG = "GyroscopSensorListener"
 
     // The second value in FloatArray is Z axis
     private val zAxisIndex = 2
@@ -78,13 +83,17 @@ class GyroscopSensorListener(
         event?.let {
             Log.i(TAG, "Current value of z-rot: ${it.values[zAxisIndex]}")
             if (it.values[zAxisIndex] > sensitivity || it.values[zAxisIndex] < (-sensitivity)) {
-                Log.i(TAG, "Fireaway")
+                Log.i(TAG, "Fire away")
                 zRotationChanged()
             }
         }
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
+    companion object {
+        private const val TAG = "GyroscopeSensorListener"
+    }
 }
 
 class AccelerometerChangeListener(
@@ -96,16 +105,17 @@ class AccelerometerChangeListener(
 
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
+            // Logging the first value, so that only the change fires the rocket
             if (firstValue == null) {
                 firstValue = it.values[1]
             } else {
                 firstValue?.let { value ->
                     Log.i(
-                        "AccelerometerSensorListener",
+                        TAG,
                         "First value: $firstValue current value of x-rot: ${it.values[1]}",
                     )
                     if (it.values[1] > (value + sensitivity) || it.values[1] < (value - sensitivity)) {
-                        Log.i("AccelerometerSensorListener", "Fireaway")
+                        Log.i(TAG, "Fireaway")
                         yRotationChanged()
                     }
                 }
@@ -114,4 +124,8 @@ class AccelerometerChangeListener(
     }
 
     override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
+    companion object {
+        private const val TAG = "AccelerometerSensorListener"
+    }
 }

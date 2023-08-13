@@ -8,6 +8,11 @@ class RocketsRepository(
     private val remoteDataSource: RocketsRemoteDataSource,
     private val rocketAPIConverterUseCase: RocketAPIConverterUseCase,
 ) {
+    /**
+     * Uses remote data source to get list of rockets
+     *
+     * @return Single value of list of rockets
+     */
     fun getRockets(): Single<List<Rocket>> {
         return remoteDataSource.getRockets().flatMap { result ->
             Single.just(

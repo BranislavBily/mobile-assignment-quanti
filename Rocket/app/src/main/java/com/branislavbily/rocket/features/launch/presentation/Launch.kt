@@ -159,7 +159,7 @@ fun FlyingRocket(
     Image(
         modifier = modifier,
         painter = painterResource(id = R.drawable.ic_rocket_flying),
-        contentDescription = "Idle rocket",
+        contentDescription = stringResource(R.string.idle_rocket),
     )
 }
 

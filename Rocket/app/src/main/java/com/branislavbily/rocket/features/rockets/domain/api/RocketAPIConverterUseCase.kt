@@ -5,6 +5,13 @@ import com.branislavbily.rocket.features.rockets.data.api.RocketAPI
 import com.branislavbily.rocket.features.rockets.domain.Rocket
 
 interface RocketAPIConverterUseCase {
+
+    /**
+     * Converts RocketAPI into model Rocket
+     *
+     * @param rocketAPI Data class to be converted
+     * @return Converted model
+     */
     fun toModel(rocketAPI: RocketAPI): Rocket
 }
 
