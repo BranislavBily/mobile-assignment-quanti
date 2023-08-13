@@ -37,7 +37,7 @@ fun RocketListItem(
 ) {
     Column {
         Row(
-            modifier = Modifier
+            modifier = modifier
                 .clickable {
                     onRocketClicked(rocket.rocketID)
                 },
