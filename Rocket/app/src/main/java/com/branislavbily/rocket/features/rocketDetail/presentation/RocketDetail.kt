@@ -164,6 +164,9 @@ fun RocketDetailView(
             stages = rocket.stages,
         )
         RocketPhotos(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 8.dp, bottom = 8.dp),
             photos = rocket.photos,
         )
     }
@@ -364,9 +367,7 @@ fun RocketPhotos(
     photos: List<String>,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 8.dp, bottom = 8.dp),
+        modifier = modifier,
     ) {
         Text(
             text = stringResource(id = R.string.photos),
@@ -390,23 +391,25 @@ fun RocketPhotos(
 @Preview
 @Composable
 fun RocketDetailPreview() {
-    RocketDetailContent(RocketDetailScreenState(), {}, {})
-}
-
-@Preview
-@Composable
-fun RocketDetailViewPreview() {
-    RocketDetailView(rocket = RocketDetail())
-}
-
-@Preview
-@Composable
-fun RocketDetailStagesPreview() {
-    RocketStages(stages = listOf(Stage()))
+    RocketDetailContent(
+        RocketDetailScreenState(
+            rocketDetail = RocketDetail(
+                stages = listOf(Stage()),
+            ),
+        ),
+        {},
+        {},
+    )
 }
 
 @Preview
 @Composable
 fun RocketParametersPreview() {
     RocketParametersView(parameters = RocketParameters())
+}
+
+@Preview
+@Composable
+fun RocketDetailStagesPreview() {
+    RocketStages(stages = listOf(Stage()))
 }

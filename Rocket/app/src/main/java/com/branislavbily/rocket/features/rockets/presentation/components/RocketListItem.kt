@@ -31,16 +31,13 @@ import com.branislavbily.rocket.features.rockets.domain.Rocket
 
 @Composable
 fun RocketListItem(
+    modifier: Modifier = Modifier,
     rocket: Rocket,
     onRocketClicked: (String) -> Unit,
 ) {
     Column {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(60.dp)
-                .background(color = Color.White)
-                .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
                 .clickable {
                     onRocketClicked(rocket.rocketID)
                 },
