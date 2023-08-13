@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Rocket</string>
-    <string name="Rockets">Rockets</string>
-    <string name="RocketDetail">Rocket Detail</string>
-    <string name="Launch">Launch</string>
+    <string name="rockets">Rockets</string>
+    <string name="rocket_detail">Rocket Detail</string>
+    <string name="launch">Launch</string>
     <string name="overview">Overview</string>
     <string name="parameters">Parameters</string>
     <string name="height">height</string>

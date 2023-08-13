@@ -66,7 +66,7 @@ fun LaunchContent(
                 ) {
                     GoBackIconWithTitle(
                         onIconPressed = onBackPressed,
-                        title = stringResource(id = R.string.RocketDetail),
+                        title = stringResource(id = R.string.rocket_detail),
                     )
                 }
             })

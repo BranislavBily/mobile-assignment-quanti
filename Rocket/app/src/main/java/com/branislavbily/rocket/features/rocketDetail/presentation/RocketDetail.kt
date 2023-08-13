@@ -86,14 +86,14 @@ fun RocketDetailContent(
                 ) {
                     GoBackIconWithTitle(
                         onIconPressed = onBackPressed,
-                        title = stringResource(id = R.string.Rockets),
+                        title = stringResource(id = R.string.rockets),
                     )
                     Text(text = state.rocketDetail.rocketName)
                     Text(
                         modifier = Modifier.clickable {
                             onLaunchPressed()
                         },
-                        text = stringResource(id = R.string.Launch),
+                        text = stringResource(id = R.string.launch),
                     )
                 }
             })
