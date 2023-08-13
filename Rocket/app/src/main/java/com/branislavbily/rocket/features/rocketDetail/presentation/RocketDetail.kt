@@ -27,7 +27,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.pluralStringResource
@@ -140,7 +142,9 @@ fun RocketDetailView(
             modifier = Modifier.padding(top = 16.dp),
             stages = rocket.stages,
         )
-        RocketPhotos(rocket.photos)
+        RocketPhotos(
+            photos = rocket.photos,
+        )
     }
 }
 
@@ -323,13 +327,26 @@ fun RocketStageRow(
 }
 
 @Composable
-fun RocketPhotos(photos: List<String>) {
-    Text(text = stringResource(id = R.string.photos))
-    photos.forEach { photo ->
-        AsyncImage(
-            model = photo,
-            contentDescription = "Image of Rocket",
-        )
+fun RocketPhotos(
+    modifier: Modifier = Modifier,
+    photos: List<String>,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth()
+            .padding(top = 8.dp, bottom = 8.dp),
+    ) {
+        Text(text = stringResource(id = R.string.photos))
+        photos.forEach { photo ->
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp, bottom = 8.dp)
+                    .clip(RoundedCornerShape(16.dp)),
+                model = photo,
+                contentDescription = "Image of Rocket",
+                contentScale = ContentScale.FillWidth,
+            )
+        }
     }
 }
 
